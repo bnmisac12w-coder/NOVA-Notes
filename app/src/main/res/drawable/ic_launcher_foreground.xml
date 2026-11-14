@@ -4,10 +4,30 @@
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
+    <!-- Distinctive open notebook silhouette -->
     <path
-        android:fillColor="#66DFFF"
-        android:pathData="M27,25 C27,22.8 28.8,21 31,21 L38,21 C39.5,21 40.8,21.8 41.6,23 L67,61 L67,25 C67,22.8 68.8,21 71,21 L77,21 C79.2,21 81,22.8 81,25 L81,83 C81,85.2 79.2,87 77,87 L70,87 C68.5,87 67.2,86.2 66.4,85 L41,47 L41,83 C41,85.2 39.2,87 37,87 L31,87 C28.8,87 27,85.2 27,83 Z"/>
+        android:fillColor="#EAF7FF"
+        android:pathData="M17,27 C17,22.6 20.6,19 25,19 L48,19 C53,19 57,21 60,25 C63,21 67,19 72,19 L83,19 C87.4,19 91,22.6 91,27 L91,78 C91,82.4 87.4,86 83,86 L70,86 C65,86 62,88 60,91 C58,88 55,86 50,86 L25,86 C20.6,86 17,82.4 17,78 Z"/>
+    <!-- Center binding -->
+    <path
+        android:fillColor="#756BFF"
+        android:pathData="M56,25 L64,25 L64,88 L60,94 L56,88 Z"/>
+    <!-- Left page writing -->
+    <path android:fillColor="#42BFEF" android:pathData="M26,34 L47,34 L47,38 L26,38 Z M26,45 L47,45 L47,49 L26,49 Z M26,56 L43,56 L43,60 L26,60 Z M26,67 L47,67 L47,71 L26,71 Z"/>
+    <!-- Right page writing -->
+    <path android:fillColor="#42BFEF" android:pathData="M70,34 L82,34 L82,38 L70,38 Z M70,45 L82,45 L82,49 L70,49 Z M70,56 L82,56 L82,60 L70,60 Z"/>
+    <!-- Quill pen across the page -->
+    <path
+        android:fillColor="#8C7BFF"
+        android:pathData="M70,69 C71,57 79,44 91,36 C91,49 86,62 75,72 L68,79 L70,69 Z"/>
     <path
         android:fillColor="#FFFFFF"
-        android:pathData="M77,13 L80,20 L87,23 L80,26 L77,33 L74,26 L67,23 L74,20 Z"/>
+        android:pathData="M73,68 C78,56 84,46 91,36 C86,50 80,61 73,68 Z"/>
+    <path
+        android:fillColor="#42BFEF"
+        android:pathData="M68,77 L73,72 L76,76 L68,83 Z"/>
+    <!-- Small nova spark -->
+    <path
+        android:fillColor="#FFD978"
+        android:pathData="M34,12 L37,20 L45,23 L37,26 L34,34 L31,26 L23,23 L31,20 Z"/>
 </vector>
