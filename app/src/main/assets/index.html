@@ -63,7 +63,7 @@ let notes=loadNotes(),settings=loadSettings(),reminders=loadReminders(),activePa
 const $=id=>document.getElementById(id);
 function loadNotes(){try{const raw=JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');if(!Array.isArray(raw))return[];return raw.map((n,i)=>({id:String(n.id||('old_'+i+'_'+Date.now())),title:String(n.title||''),content:String(n.content||''),updated:Number(n.updated)||Date.now(),color:COLORS[n.color]?n.color:'default',pinned:!!n.pinned,archived:!!n.archived,deletedAt:n.deletedAt||null,tags:Array.isArray(n.tags)?n.tags:[],checklist:Array.isArray(n.checklist)?n.checklist:[]}));}catch(e){return[]}}
 function loadReminders(){try{const x=JSON.parse(localStorage.getItem(REMINDER_KEY)||'[]');return Array.isArray(x)?x.filter(r=>r&&r.id&&r.message&&Number.isFinite(Number(r.time))).map(r=>({...r,repeat:r.repeat==='daily'?'daily':'once'})):[]}catch(e){return[]}}
-function saveReminders(){localStorage.setItem(REMINDER_KEY,JSON.stringify(reminders));renderReminders()}
+function saveReminders(){localStorage.setItem(REMINDER_KEY,JSON.stringify(reminders));if(window.AndroidReminders&&AndroidReminders.sync){try{AndroidReminders.sync(JSON.stringify(reminders))}catch(e){}}renderReminders()}
 function loadSettings(){try{return Object.assign({theme:'light',fontSize:'15',defaultColor:'default'},JSON.parse(localStorage.getItem(SETTINGS_KEY)||'{}'))}catch(e){return{theme:'light',fontSize:'15',defaultColor:'default'}}}
 function persist(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(notes));$('saveStatus').textContent='✓ Kaydedildi';}catch(e){showToast('Kayıt alanı dolu olabilir. Yedek alıp yer aç.')}}
 function saveSettings(){localStorage.setItem(SETTINGS_KEY,JSON.stringify(settings));applySettings()}
