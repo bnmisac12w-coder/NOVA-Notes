@@ -18,6 +18,8 @@ jobs:
           java-version: '17'
       - name: Gradle kurulumunu hazırla
         uses: gradle/actions/setup-gradle@v4
+        with:
+          gradle-version: '8.9'
       - name: Debug APK oluştur
         run: gradle :app:assembleDebug
       - name: APK dosyasını Actions çıktısı olarak sakla
