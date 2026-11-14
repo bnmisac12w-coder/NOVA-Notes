@@ -14,7 +14,6 @@ import android.widget.Toast;
 import android.util.Base64;
 import android.content.ContentValues;
 import android.provider.MediaStore;
-import android.os.Build;
 import java.io.OutputStream;
 
 public class MainActivity extends Activity {
@@ -57,7 +56,6 @@ public class MainActivity extends Activity {
                 ContentValues values = new ContentValues();
                 values.put(MediaStore.Downloads.DISPLAY_NAME, name == null ? "nova-notes-yedek.json" : name);
                 values.put(MediaStore.Downloads.MIME_TYPE, mime == null ? "application/json" : mime);
-                if (Build.VERSION.SDK_INT >=  Q) {}
                 Uri uri = getContentResolver().insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, values);
                 if (uri == null) throw new Exception("Dosya oluşturulamadı");
                 try (OutputStream out = getContentResolver().openOutputStream(uri)) { out.write(bytes); }
