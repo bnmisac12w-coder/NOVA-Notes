@@ -4,30 +4,20 @@
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
-    <!-- Distinctive open notebook silhouette -->
+    <!-- Minimal, recognizable notebook icon -->
     <path
-        android:fillColor="#EAF7FF"
-        android:pathData="M17,27 C17,22.6 20.6,19 25,19 L48,19 C53,19 57,21 60,25 C63,21 67,19 72,19 L83,19 C87.4,19 91,22.6 91,27 L91,78 C91,82.4 87.4,86 83,86 L70,86 C65,86 62,88 60,91 C58,88 55,86 50,86 L25,86 C20.6,86 17,82.4 17,78 Z"/>
-    <!-- Center binding -->
+        android:fillColor="#F3F7FC"
+        android:pathData="M28,16 L72,16 L88,32 L88,86 C88,90.4 84.4,94 80,94 L28,94 C23.6,94 20,90.4 20,86 L20,24 C20,19.6 23.6,16 28,16 Z"/>
+    <path
+        android:fillColor="#D8E5F2"
+        android:pathData="M72,16 L72,28 C72,30.2 73.8,32 76,32 L88,32 Z"/>
+    <path
+        android:fillColor="#39C7F4"
+        android:pathData="M20,29 L27,29 L27,81 L20,81 Z"/>
+    <path
+        android:fillColor="#9AAFC4"
+        android:pathData="M38,42 L75,42 L75,46 L38,46 Z M38,54 L75,54 L75,58 L38,58 Z M38,66 L68,66 L68,70 L38,70 Z"/>
     <path
         android:fillColor="#756BFF"
-        android:pathData="M56,25 L64,25 L64,88 L60,94 L56,88 Z"/>
-    <!-- Left page writing -->
-    <path android:fillColor="#42BFEF" android:pathData="M26,34 L47,34 L47,38 L26,38 Z M26,45 L47,45 L47,49 L26,49 Z M26,56 L43,56 L43,60 L26,60 Z M26,67 L47,67 L47,71 L26,71 Z"/>
-    <!-- Right page writing -->
-    <path android:fillColor="#42BFEF" android:pathData="M70,34 L82,34 L82,38 L70,38 Z M70,45 L82,45 L82,49 L70,49 Z M70,56 L82,56 L82,60 L70,60 Z"/>
-    <!-- Quill pen across the page -->
-    <path
-        android:fillColor="#8C7BFF"
-        android:pathData="M70,69 C71,57 79,44 91,36 C91,49 86,62 75,72 L68,79 L70,69 Z"/>
-    <path
-        android:fillColor="#FFFFFF"
-        android:pathData="M73,68 C78,56 84,46 91,36 C86,50 80,61 73,68 Z"/>
-    <path
-        android:fillColor="#42BFEF"
-        android:pathData="M68,77 L73,72 L76,76 L68,83 Z"/>
-    <!-- Small nova spark -->
-    <path
-        android:fillColor="#FFD978"
-        android:pathData="M34,12 L37,20 L45,23 L37,26 L34,34 L31,26 L23,23 L31,20 Z"/>
+        android:pathData="M68,16 L80,16 L80,42 L74,37 L68,42 Z"/>
 </vector>
