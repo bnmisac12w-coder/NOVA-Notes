@@ -27,14 +27,29 @@ public class ReminderScheduler {
         }
     }
     static void sync(Context c, String json) throws Exception {
-        JSONArray items = new JSONArray(json);
-        c.getSharedPreferences(PREFS, 0).edit().putString(KEY, items.toString()).apply();
-        AlarmManager am = (AlarmManager)c.getSystemService(Context.ALARM_SERVICE);
-        for (int i=0;i<items.length();i++) {
-            JSONObject r=items.getJSONObject(i);
-            long when=r.optLong("time",0);
-            if (when>System.currentTimeMillis()) setAlarm(c,am,r.optString("id"),r.optString("message"),when,r.optString("repeat","once"));
+        SharedPreferences prefs=c.getSharedPreferences(PREFS,0);
+        JSONArray previous=new JSONArray(prefs.getString(KEY,"[]"));
+        JSONArray incoming=new JSONArray(json), merged=new JSONArray();
+        AlarmManager am=(AlarmManager)c.getSystemService(Context.ALARM_SERVICE);
+        java.util.HashMap<String,JSONObject> oldMap=new java.util.HashMap<>();
+        for(int i=0;i<previous.length();i++){
+            JSONObject old=previous.getJSONObject(i);
+            String id=old.optString("id");
+            oldMap.put(id,old);
+            Intent intent=new Intent(c,ReminderReceiver.class).setAction("com.nova.notes.REMINDER");
+            PendingIntent pi=PendingIntent.getBroadcast(c,id.hashCode(),intent,PendingIntent.FLAG_UPDATE_CURRENT|PendingIntent.FLAG_IMMUTABLE);
+            am.cancel(pi);
         }
+        for(int i=0;i<incoming.length();i++){
+            JSONObject item=incoming.getJSONObject(i);
+            String id=item.optString("id");
+            JSONObject old=oldMap.get(id);
+            if(old!=null && "daily".equals(item.optString("repeat")) && "daily".equals(old.optString("repeat")) && old.optLong("time")>item.optLong("time")) item.put("time",old.optLong("time"));
+            merged.put(item);
+            long when=item.optLong("time",0);
+            if(when>System.currentTimeMillis()) setAlarm(c,am,id,item.optString("message"),when,item.optString("repeat","once"));
+        }
+        prefs.edit().putString(KEY,merged.toString()).apply();
     }
     static void setAlarm(Context c, AlarmManager am, String id, String message, long when, String repeat) {
         Intent i=new Intent(c, ReminderReceiver.class).setAction("com.nova.notes.REMINDER").putExtra("id",id).putExtra("message",message).putExtra("time",when).putExtra("repeat",repeat);
