@@ -108,6 +108,19 @@ $('listMode').addEventListener('click',()=>{draftChecklist=!draftChecklist;$('no
 $('archiveFromEditor').addEventListener('click',()=>{if(editingId){const n=notes.find(x=>x.id===editingId);if(n){n.archived=true;n.pinned=false;persist();renderNotes()}}closeEditor();showToast('Arşive taşındı')});$('search').addEventListener('input',e=>{searchText=e.target.value;renderNotes()});$('noteSections').addEventListener('click',e=>{const filter=e.target.closest('[data-filter]');if(filter){chooseFilter(filter.dataset.filter);return}if(e.target.id==='emptyTrash'){if(confirm('Çöp kutusundaki tüm notlar kalıcı olarak silinsin mi?')){notes=notes.filter(n=>!n.deletedAt);persist();renderNotes()}return}const btn=e.target.closest('[data-action]');if(btn){e.stopPropagation();action(btn.dataset.action,btn.dataset.id);return}const check=e.target.closest('[data-check-note]');if(check){e.stopPropagation();const n=notes.find(x=>x.id===check.dataset.checkNote),item=n?.checklist?.[Number(check.dataset.checkIndex)];if(item){item.done=check.checked;n.updated=Date.now();persist();renderNotes()}return}const card=e.target.closest('[data-open]');if(card)editNote(card.dataset.open)});
 $('viewToggle').addEventListener('click',()=>{viewMode=viewMode==='grid'?'list':'grid';$('viewToggle').textContent=viewMode==='grid'?'▦':'☰';document.querySelectorAll('.notes-grid').forEach(el=>el.classList.toggle('list-view',viewMode==='list'));showToast(viewMode==='grid'?'Izgara görünümü':'Liste görünümü')});
 $('themeSelect').addEventListener('change',e=>{settings.theme=e.target.value;saveSettings();renderNotes();if($('overlay').style.display==='flex')renderPalette()});$('fontSelect').addEventListener('change',e=>{settings.fontSize=e.target.value;saveSettings();applySettings();renderNotes()});$('defaultColor').addEventListener('change',e=>{settings.defaultColor=e.target.value;saveSettings()});$('exportBtn').addEventListener('click',exportBackup);$('importBtn').addEventListener('click',()=>$('importFile').click());$('importFile').addEventListener('change',e=>{const f=e.target.files?.[0];if(f)importBackup(f)});
+
+/* Android WebView: export the JSON backup into the device Downloads folder. */
+document.addEventListener('click',async e=>{
+ const a=e.target.closest('a[download]');
+ if(!a||!a.href.startsWith('blob:')||!window.AndroidFiles)return;
+ e.preventDefault();
+ try{
+  const blob=await(await fetch(a.href)).blob();
+  const data=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=reject;reader.readAsDataURL(blob)});
+  window.AndroidFiles.save(String(data).split(',')[1],a.download,blob.type||'application/json');
+ }catch(err){showToast('Yedek kaydedilemedi')}
+});
+
 applySettings();renderNotes();renderReminders();scheduleReminders();
 })();
 </script>
