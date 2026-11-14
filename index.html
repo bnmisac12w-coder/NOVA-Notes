@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#090d18">
+<meta name="description" content="NOVA Notes Android uygulamasını indirin.">
+<title>NOVA Notes — İndir</title>
+<style>
+:root{color-scheme:dark;font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:radial-gradient(ellipse at 50% 0%,#172b4a 0,#0b1221 42%,#070a12 100%);color:#f4f7ff;display:grid;place-items:center;padding:24px}
+main{width:min(100%,520px);text-align:center}
+.logo{width:82px;height:82px;margin:0 auto 22px;border-radius:25px;display:grid;place-items:center;background:linear-gradient(145deg,#8ce7ff,#3486ff);color:#071323;font-size:38px;font-weight:900;box-shadow:0 12px 45px #3486ff44}
+h1{font-size:clamp(32px,8vw,46px);margin:0;letter-spacing:-1.8px}
+.sub{color:#9eacc4;margin:12px 0 30px;font-size:15px}
+.panel{background:#111a2b;border:1px solid #263650;border-radius:22px;padding:25px;box-shadow:0 24px 80px #0006}
+.version{color:#a9b8d0;font-size:13px;margin-bottom:17px}
+button{width:100%;border:0;border-radius:14px;padding:17px 20px;background:linear-gradient(100deg,#65dcff,#568bff);color:#071323;font-size:16px;font-weight:800;cursor:pointer}
+button:disabled{opacity:.45;cursor:not-allowed}
+#status{min-height:42px;margin:17px 0 0;color:#a9b8d0;font-size:13px;line-height:1.6}
+.links{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin-top:24px}
+a{color:#8fdfff;text-decoration:none;font-size:13px}
+a:hover{text-decoration:underline}
+.note{color:#65748d;font-size:12px;margin-top:28px}
+</style>
+</head>
+<body>
+<main>
+  <div class="logo">N</div>
+  <h1>NOVA Notes</h1>
+  <p class="sub">Notlarını tek yerde düzenle. Her zaman yanında.</p>
+  <section class="panel">
+    <div class="version" id="version">Sürüm bilgisi kontrol ediliyor…</div>
+    <button id="download" disabled>APK hazırlanıyor…</button>
+    <p id="status" aria-live="polite">En son Android sürümü kontrol ediliyor.</p>
+  </section>
+  <nav class="links">
+    <a href="https://github.com/bnmisac12w-coder/NOVA-Notes" target="_blank" rel="noopener">GitHub</a>
+    <a href="https://github.com/bnmisac12w-coder/NOVA-Notes/releases" target="_blank" rel="noopener">Tüm sürümler</a>
+    <a href="https://github.com/bnmisac12w-coder/NOVA-Notes/actions" target="_blank" rel="noopener">Derleme durumu</a>
+  </nav>
+  <p class="note">NOVA Notes · Android uygulaması</p>
+</main>
+<script>
+const button=document.getElementById('download');
+const statusText=document.getElementById('status');
+const versionText=document.getElementById('version');
+async function loadRelease(){
+ try{
+  const response=await fetch('https://api.github.com/repos/bnmisac12w-coder/NOVA-Notes/releases/latest',{headers:{'Accept':'application/vnd.github+json'}});
+  if(!response.ok) throw new Error('Henüz yayınlanmış sürüm bulunamadı.');
+  const release=await response.json();
+  const apk=(release.assets||[]).find(asset=>asset.name.toLowerCase().endsWith('.apk'));
+  if(!apk) throw new Error('Sürüm kaydı var ancak APK dosyası henüz eklenmemiş.');
+  versionText.textContent='En son sürüm: '+(release.tag_name||release.name||'Yayında');
+  button.disabled=false;
+  button.textContent='⬇ APK İndir';
+  button.onclick=()=>{window.location.href=apk.browser_download_url};
+  statusText.textContent='APK indirilmeye hazır. Dosyayı indirdikten sonra açarak kurulumu başlatabilirsin.';
+ }catch(error){
+  versionText.textContent='İlk sürüm hazırlanıyor';
+  button.disabled=true;
+  button.textContent='APK henüz hazır değil';
+  statusText.textContent=error.message+' Derleme tamamlanınca bu sayfadaki indirme düğmesi otomatik aktif olacak.';
+ }
+}
+loadRelease();
+</script>
+</body>
+</html>
